@@ -54,7 +54,7 @@ Every part of governance (parameters, rules, and appointees) are subject to chan
 
 The community must also be instantiated with an initial set of members and an initial distribution of voting power. Once this has been instantiated, an Admittor may be elected who can add new members (and perhaps assign them a voting power).
 
-#### **Security Model**:
+**Security Model**:
 
 Note that the governance protocol relies on the people who are running it. Thus, any instantiation of a community can be taken over by bad actors that the community originally wanted to shun. The security model of any community hinges on the thresholds specified in the Community-wide governance parameters. The higher these thresholds are, the more bad actors there must be as a proportion in order to take over the network. However, thresholds that are too high might make it impossible to make any community-wide decision. Thus, communities must strike a balance between making their thresholds low enough to be dynamic and flexible while also high enough to prevent a hostile takeover of the community.
 
@@ -70,7 +70,7 @@ Admittors may remove users who are still in the delay period, but cannot remove 
 
 Note: This can be inconvenient for honest members that are in the delay period when the admittor gets removed for malicious activity, since they must wait even longer for their voting power to get activated. However, this will only happen if voters vote to explicity remove the admittor for malicious activity which should be a very rare event. If the admittor gets replaced for benevolent reasons (eg term limits, retirement, etc), then the new members will have their voting power activated as soon as the original delay period passes.
 
-## Enforcer decisions
+### Enforcer decisions
 
 Similarly it is important for enforcer decisions to take effect as soon as possible. If a bad actor is pestering the community, their ability to interact with the community must be stopped as soon as possible. Thus, Hosts will act on Enforcer decisions immediately and stop serving the content of banned actors.
 
@@ -92,3 +92,33 @@ The delay period is a key part of the Fora protocol that prevents malicious auth
 Its basic effect is to delay any changes to community governance at the blockchain level while immediately enacting any changes to community interaction at the ActivityPub level. This is because community governance acts as a final backstop against malicious authorities. If a malicious authority successfully takes over the governance of the community, then there is no protocol-level recovery from the situation. Thus any changes an authority wants to make to voting power on the blockchain must be delayed so that the community can protect against malicious attacks that seek to consolidate power in the hands of a malicious authority.
 
 At the same time, we do not want to delay changes to community interaction because we want to give honest authorities effective and immediate tools to steward the community and enforce its rules. Note that if these changes were enacted by malicious authorities, they can be easily reversed by a new authority once the community chooses a replacement using voting power that cannot be easily usurped by the malicious party.
+
+## Dishonest Hosts
+
+So far, we've only been talking about honest Hosts who will monitor decisions made by Admittors and Enforcers and act accordingly; for example allowing new members to participate or refusing to serve bad content to end-users.
+
+However, Hosts are not accountable to community governance and thus Fora does not assume that Hosts will be honestly following the protocol. So how does Fora intend to protect honest users from dishonest Hosts who refuse to comply with community decisions?
+
+**Scenario 1: Host ignores Admittor Decision**
+
+First we can look at a Host who does not accept a new member admitted by the Admittors. Such a Host may refuse to accept messages coming from the new member and may refuse to serve queries about the new member from other members.
+
+This is not an issue since the new member may simply choose a different Host to send their messages to, and if this Host is honest then they will gossip the message to all peers. Other members who are trying to get messages from the new user may simply direct their queries to other Hosts if they do not get a response from the dishonest Host. Note that a dishonest Host can only refuse to serve queries. They cannot maliciously forge messages since all messages are signed by the user.
+
+So long as there are enough Honest nodes in the network such that no user gets completely eclipsed by Dishonest nodes, then all users will be able to send and receive messages as soon as they are admitted into the community.
+
+**Scenario 2: Host ignores Enforcer Decision**
+
+The more serious issue is when a Host ignores an Enforcer's Decision about banned users or banned content. Here a Host might choose to serve an honest user content that has already been banned by an enforcer. The honest user may then choose to report this content, only to find out that this content has already been banned by the Enforcer. The honest user then has a choice of switching to a different Host if they believe this was the cause of malicious hosting rather than a mere liveness issue.
+
+**Honest Users Gravitate to Honest, Competent Hosts**
+
+As noted above, in each case dishonest nodes can choose not to comply with community decisions; however honest users can always detect this and move to an honest host so long as they aren't completely eclipsed by dishonest hosts. (See eclipse attacks in decentralized networks [here](https://www.radixdlt.com/post/what-is-an-eclipse-attack/)). Thus, dishonest Hosts only threaten to be a temporary nuisance to honest users that rely on them and can no longer affect users once they've switched hosts.
+
+Eventually, dishonest hosts will develop a reputation in the community and users will simply choose honest hosts that comply with community decisions. Of course, hosts must also be competent in order to keep track of the latest decisions recorded on the blockchain. Even the most reliable host will occassionally serve banned content because of synchrony issues in which a user gets served content before it gets deleted by the host. However, repeated and consistent failure to keep track of governance decisions will alienate users from incompetent hosts. Thus, honest users will eventually gravitate towards a trusted set of honest and competent hosts.
+
+Thus even without assuming all Hosts are honest and baking in accountability in the protocol, we can accomplish Goal 6 in the list of [goals](../dogma/goals.md) since the community will be able to effectively enforce its rules by relying on honest Hosts to carry out the decisions made by community-appointed authorities.
+
+Dishonest hosts may still serve dishonest users by continuing to serve banned content and banned users. However, they cannot interfere with the honest parts of the community since the Honest hosts will not accept any banned messages. In fact, persistently dishonest Hosts may simply be shunned from the gossip network if they consistently send banned messages to Honest peers. Of course, dishonest hosts can form their own network where they can create a community that is in violation of the original community rules, however one should note that this constitutes an **entirely separate** community altogether that cannot interfere with the interactions of the original community.
+
+As noted in Non-Goal #3 in the [goals doc](../dogma/goals.md), this is not something Fora expects to make impossible. So long as the original community can effectively safeguard its own interaction space, other communities may form with different ruleset without any issues.
