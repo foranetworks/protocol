@@ -54,9 +54,11 @@ Every part of governance (parameters, rules, and appointees) are subject to chan
 
 The community must also be instantiated with an initial set of members and an initial distribution of voting power. Once this has been instantiated, an Admittor may be elected who can add new members (and perhaps assign them a voting power).
 
-**Security Model**:
+**Community Governance Security Model**:
 
 Note that the governance protocol relies on the people who are running it. Thus, any instantiation of a community can be taken over by bad actors that the community originally wanted to shun. The security model of any community hinges on the thresholds specified in the Community-wide governance parameters. The higher these thresholds are, the more bad actors there must be as a proportion in order to take over the network. However, thresholds that are too high might make it impossible to make any community-wide decision. Thus, communities must strike a balance between making their thresholds low enough to be dynamic and flexible while also high enough to prevent a hostile takeover of the community.
+
+Thus the Fora protocol must assume that malicious actors will never reach the threshold proportion of total voting power necessary to control community-wide governance votes.
 
 ### Admittor Decisions
 
@@ -122,3 +124,9 @@ Thus even without assuming all Hosts are honest and baking in accountability in 
 Dishonest hosts may still serve dishonest users by continuing to serve banned content and banned users. However, they cannot interfere with the honest parts of the community since the Honest hosts will not accept any banned messages. In fact, persistently dishonest Hosts may simply be shunned from the gossip network if they consistently send banned messages to Honest peers. Of course, dishonest hosts can form their own network of banned users that send banned messages and interact in ways that are in violation of the original community rules, however one should note that this constitutes an **entirely separate** community altogether that cannot interfere with the interactions of the original community.
 
 As noted in Non-Goal #3 in the [goals doc](../dogma/goals.md), this is not something Fora expects to make impossible. So long as the original community can effectively safeguard its own interaction space, other communities may form with different rulesets without any issues.
+
+**Community Interaction Security Model**
+
+As mentioned above, for an honest users to successfully connect to the rest of the honest community; they must not be eclipsed by dishonest Hosts. If an honest user has no choice but to access the community through a dishonest Host, then Fora can make no guarantee that the user can be protected from banned users and banned content.
+
+Thus the Fora protocol assumes that the peer-to-peer network is sufficiently distributed and decentralized such that no user can be fully eclipsed by dishonest Hosts.
