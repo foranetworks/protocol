@@ -6,7 +6,7 @@ This document specifies the extensions to Fora required for a community to be co
 
 "it's just activity pub with governance"
 
-If we examine the Fora kernel through the lens of Activity Pub we find numerous similarities. Each user is a Client and each host is a Server, as defined by the Activity Pub specification. In fact, the only differences are a layer of governance settled on top of Activity Pub, along with additional properties between clients and servers, and servers and servers. The primary property added is the right to collective identification as a single community. Different servers with different sets of users can now collectively agree to be identified as the same community thereby sharing their state and community membership.
+If we examine the Fora kernel through the lens of Activity Pub we find numerous similarities. Each user is a Client and each host is a Server, as defined by the Activity Pub specification. In fact, the only differences are a layer of governance settled on top of Activity Pub, along with additional properties between clients and servers, and servers and servers. The primary property added is the right to collective identification as a single community. Different servers with different sets of clients can now collectively agree to be identified as the same community thereby sharing their state and community membership.
 
 The usefulness of this conceptual nesting is addressing the **right to individual exit** and the **right to collective exit**. 
 
@@ -36,5 +36,4 @@ In addition to maintaining the full state of the community, servers will listen 
 ## Limitations
 
 Since any content posted to a Fora community must contend with the possibility of byzantine host behaviour, the Fora protocol cannot make any guarantees regarding private posts that are only readable to a subset of users. Thus, Fora will only support Public posts and direct messages. Public posts will be sent in plaintext and signed by the sender, while direct messages to users can be end-to-end encrypted given that all users have a Public/Private key as mentioned above (though a different pair would be used for DMs). This ensures that hosts have no ability to attack the confidentiality or integrity of user-sent messages. They can only refuse to relay the messages, though this is grounds for enforcers to remove a host.
-
 
