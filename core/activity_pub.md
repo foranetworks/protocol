@@ -15,21 +15,32 @@ The former can be relatively easily addressed in Activity Pub by using flexible 
 The latter requires the concept of communal ownership, which Activity Pub lacks. Suppose an Activity Pub implementation added support for DID's and thus fulfilled the requirements for the right to individual exit. In the presence of a malicious operator, we can reasonably predict that even in the case of an organized exit, the size and network effect of the forked community will be less than the original community. The right to collective exit and implicitly the right to partial ownership of a community helps mitigates the risk of malicious operators while aligning the incentives of operators, producers, moderators, and consumers.
 
 
-## Public/Private Key Authentication
-
-ActivityPub does not specify a particular authentication scheme, however most ActivityPub communities use OAuth2.0 or something similar which involves a traditional username/password scheme. Since all of the community state must be public and shareable between hosts, we cannot rely on username/password schemes or any scheme that gives hosts privileged information on a user’s authentication info. Thus, users must authenticate by proving ownership of a secret private key that corresponds to the public key that is publicly registered on a blockchain.
-
 ## URI and DID
 
-URIs (Uniform Resource Identifier) are used within Activity Pub to identify different servers. 
+URIs (Uniform Resource Identifier) are used within Activity Pub to identify different servers and clients.  
 
-Fora will use [decentralized identifiers](https://www.w3.org/TR/did-core/), to identify both users and platforms. These DIDs must be registered on a blockchain that the platform can query identities from. Users will have a DID so they can self-attest to their identity on the blockchain and then use that DID in any Fora community they wish. They can also retain this identity even as they move to different communities. The DID document for each user must contain the current public key they will use sign messages sent from their Fora user account. 
+Fora will use [decentralized identifiers](https://www.w3.org/TR/did-core/), to identify both clients and communities. 
 
-Fora implementations which rely on the public key registered with a DID instead of registering a public key with a governance module, will benefit from dynamic swapping of public keys. 
+Please refer to the DID specification for further details, but it is essential to understand that:
+- a DID identifies a DID Subject, and that subject must never change
+- a DID resolves to a DID Document which describes the DID subject
+- a DID Document may be modified by one or more DID Controllers
+- a DID Subject is not necessarily also the DID Controller
+- there exists a verification method for each DID controller, which is specified in the DID Document
+- there exists an authentication method to be associated with a DID Subject, which is specified in the DID Document
+- All information may be modified in a DID Document except the id of the subject
 
-Meanwhile communities will also have DIDs that identify them to their users. This DID will also be registered on the blockchain as a government. The DID may include a default set of "seed" hosts to allow users to conveniently find and connect to the community. Any governance decisions which affects the set of hosts will update the DID resolving result to output a new set of hosts.
+The DIDs of a client must be recorded on a verifiable data registry, typically this will be a public blockchain or ledger. All communities will rely on client DIDs to resolve the authentication method used by a particular client. Communities may choose not to rely on DIDs for authentication of governance module interaction (NOTE: the authentication method of a client may be different from its corresponding controller, the latter would be used to authenticate a governance vote). In this case, public keys for each client controller must be registered on the community. If the communities chooses to use on-chain DID verification, the client DID controllers must be verifiable via a communication protocol such as InterBlockchain Communication.
+
+Client DIDs are intentionally isolated from the communities they are members of in order to allow for individual exit to different communities as well as improved operational security. DIDs allow for clients to rotate private/public key pairs without notifiying all the relevant parties.  The authentication method specified by a client DID must be a form of public/private key authentication.
+
+Communities will also have DIDs that identify them to their users. This DID will also be recorded on a blockchain as a government. The DID Document for this DID will be deterministically generated based on the community parameters that exist at the block height the DID resolving function is being executed.  All governance decisions will be recorded on the DID Document. The DID controller will be the community members and the verification method to update the DID Document will be the passing of a governance proposal. The DID may include a default set of "seed" hosts to allow users to conveniently find and connect to the community which will be set under the service endpoint section of a DID Document. Additional parameters will be added to the DID Document which indicate a list of admittors, enforcers, members, governance decisions and any other relevant information. 
 
 Note: There may be many valid, honest hosts that exist outside of this community-curated set.
+
+## Public/Private Key Authentication
+
+ActivityPub does not specify a particular authentication scheme, however most ActivityPub communities use OAuth2.0 or something similar which involves a traditional username/password scheme. Since all of the community state must be public and shareable between hosts, we cannot rely on username/password schemes or any scheme that gives servers privileged information on a client’s authentication info. Thus, clients must authenticate by proving ownership of a secret private key that corresponds to the public key that is publicly registered on a blockchain.
 
 ## Server
 
