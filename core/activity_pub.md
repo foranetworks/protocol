@@ -19,7 +19,7 @@ The latter requires the concept of communal ownership, which Activity Pub lacks.
 
 URIs (Uniform Resource Identifier) are used within Activity Pub to identify different servers and clients.  
 
-Fora will use [decentralized identifiers](https://www.w3.org/TR/did-core/), to identify both clients and communities. 
+Fora will use [decentralized identifiers](https://www.w3.org/TR/did-core/), to identify both members and communities. 
 
 Please refer to the DID specification for further details, but it is essential to understand that:
 - a DID identifies a DID Subject, and that subject must never change
