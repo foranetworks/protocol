@@ -9,11 +9,11 @@
 3. Communities may decide who gets to be a part of the community, or they may choose to have a permissionless community (open enrollment).
 4. Communities decide the rules by which individual members get voting power. This may either be determined statically (eg each member gets a single vote), or it may be determined dynamically (eg trusted authority awards variable voting power to members).
 5. Members of the community can vote on the rules of the community and may change them anytime they wish, subject to a vote that passes the required threshold.
-6. Communities must be able to efficiently and effectively enforce their rules by having the ability to ban content as well as users from their communities.
-7. In order to efficiently and effectively enforce community rules, members of the community may appoint trusted users to specific roles that help steward the community (eg admitting new members, enforcing rules, etc). However, they may also replace these appointees at any time by voting them out and replacing with a new candidate. 
-8. Any malicious authority must not be able to use their power to suppress the ability of the community to overthrow them. For example, a moderator should not be able to ban all users that vote against them before they can vote them out.
-9. *A user who wishes to individually exit the community should be able to transfer their established identity to a different community.*
-10. *Community governance should be a liquid democracy where users can delegate their voting power to other users who can vote on their behalf*
+6. Communities must be able to efficiently and effectively enforce their rules by having the ability to ban content as well as members from their communities.
+7. In order to efficiently and effectively enforce community rules, members of the community may appoint trusted members to specific roles that help steward the community (eg admitting new members, enforcing rules, etc). However, they may also replace these appointees at any time by voting them out and replacing with a new candidate. 
+8. Any malicious authority must not be able to use their power to suppress the ability of the community to overthrow them. For example, a moderator should not be able to ban all members that vote against them before they can vote them out.
+9. *A member who wishes to individually exit the community should be able to transfer their established identity to a different community.*
+10. *Community governance should be a liquid democracy where members can delegate their voting power to other members who can vote on their behalf*
 
 All italicized goals are low-priority and may not be accomplished on the first version of the protocol.
 
