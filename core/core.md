@@ -24,7 +24,7 @@ It is up to the community how enforcers coordinate with each other to enforce th
 
 Now that we've defined the terms of the Fora protocol, we can describe how the members of the community are meant to interact with each other.
 
-Members send messages to the community by sending an ActivityPub message signed with the private key that is associated with their public key. Members must also include a sequence in their message along with the hash of the previous message to ensure consistent ordering and to detect any dropped messages.
+Members send messages to the community by sending an ActivityPub message signed with the private key that is associated with their public key. Members may also include a sequence in their message along with the hash of the previous message to ensure consistent ordering and to detect any dropped messages. Note, the sequence does not guarantee any security or integrity; it is provided purely as a convenience to help with client-side ordering. Client implementations may use these sender-specified sequences to order incoming messages, though they MUST not rely on these sequences to function as malicious or faulty senders may omit or duplicate sequences.
 
 If the member is a Light User, they must then send this message to a Host of their choice. If the member is a Host, they simply propagate their message to the rest of their peers.
 
@@ -130,3 +130,15 @@ As noted in Non-Goal #3 in the [goals doc](../dogma/goals.md), this is not somet
 As mentioned above, for an honest members to successfully connect to the rest of the honest community; they must not be eclipsed by dishonest Hosts. If an honest member has no choice but to access the community through a dishonest Host, then Fora can make no guarantee that the member can be protected from banned members and banned content.
 
 Thus the Fora protocol assumes that the peer-to-peer network is sufficiently distributed and decentralized such that no member can be fully eclipsed by dishonest Hosts.
+
+## Dishonest Members
+
+Members who consistently or flagrantly break community rules can be banned by Enforcers. However, these bad actors can simply create a new identity and try to enter the community again. Thus, Fora communities facing these Sybil attacks, should tighten their admission requirements to prevent banned users from re-entering the community with freshly minted identities.
+
+This can be achieved either by evaluating whether the proposed member is an established member in other Fora communites, or by relying on attestations from members who are already in the community.
+
+Since member identities must be registered on a public ledger (blockchain), this provides a measure of spam prevention since most public blockchains will impose an inherent cost for user registration through their transaction fees. These can be tuned to higher or lower spam prevention by increasing the cost associated with creating a new member, this can be done either Proof-Of-Stake style (by increasing the cost in tokens for creating a new user) or Proof-of-Work style (by requiring a unique solution to a cryptographic puzzle in order to create a user). Either approach imposes a cost to creating a new Fora identity, and thus incentivizes members to preserve their reputations. Note this reduces accessibility for users that cannot afford to pay such costs, thus Fora communities must strike a balance between spam prevention and accessibility. Communities should also find ways to admit members that cannot own high-value identities, perhaps by requiring more attestations to join a community if the user deposit is too low.
+
+Spammers and malicious users may still exist, but each banned identity will have its reputation ruined and such users will have to continually pay to create new identities. These new identities in turn will not be able to re-enter well-moderated communities without gaining some reputation by joining and behaving in other communities or getting vouched for by existing members.
+
+Thus Fora protects communties from bad members by giving Enforcers the right to ban them from community spaces, giving Admittors the power to make informed decisions regarding admitting new members, and imposing a cost on identity creation so that Sybil attacks are not free.
