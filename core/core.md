@@ -129,4 +129,4 @@ As noted in Non-Goal #3 in the [goals doc](../dogma/goals.md), this is not somet
 
 As mentioned above, for an honest users to successfully connect to the rest of the honest community; they must not be eclipsed by dishonest Hosts. If an honest user has no choice but to access the community through a dishonest Host, then Fora can make no guarantee that the user can be protected from banned users and banned content.
 
-Thus the Fora protocol assumes that the peer-to-peer network is sufficiently distributed and decentralized such that no user can be fully eclipsed by dishonest Hosts.
+Thus the Fora protocol assumes that the peer-to-peer network is sufficiently distributed and decentralized such that no member can be fully eclipsed by dishonest Hosts.
