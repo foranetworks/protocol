@@ -6,9 +6,9 @@ As mentioned in the README, the Fora protocol relies on ActivityPub run over a d
 
 In order to understand the Fora protocol, it is useful to define the entities involved in a Fora community.
 
-**member**: This is a member of the Fora community, they may or may not host the Fora community. A member that hosts the Fora community will specifically be termed **Host** and a member isn't a host and relies on a Host to connect to the community will be specifically termed **Light member**. (NOTE: This is analogous to the Full Node/Light Client distinction in blockchains). members have a unique name in the community and an associated public key.
+**Member**: This is a member of the Fora community, they may or may not host the Fora community. A member that hosts the Fora community will specifically be termed **Host** and a member isn't a host and relies on a Host to connect to the community will be specifically termed **Light User**. (NOTE: This is analogous to the Full Node/Light Client distinction in blockchains). Members have a unique name in the community and an associated public key.
 
-**Host**: As mentioned above, a host is a member that maintains the full state of the community. They will receive messages from other members of the community over a gossip network and update their own state, as well as gossip any updates to the rest of the network. They may or may not serve as an access point for Light members. Hosts will listen to events on the ActivityPub network to record new interactions, and they will also listen to events on the blockchain in order to keep track of any decisions made there. An honest Host will delete any banned content from their local copy of the community and ignore any banned member by refusing to accept and propogate their messages.
+**Host**: As mentioned above, a host is a member that maintains the full state of the community. They will receive messages from other members of the community over a gossip network and update their own state, as well as gossip any updates to the rest of the network. They may or may not serve as an access point for Light Users. Hosts will listen to events on the ActivityPub network to record new interactions, and they will also listen to events on the blockchain in order to keep track of any decisions made there. An honest Host will delete any banned content from their local copy of the community and ignore any banned member by refusing to accept and propogate their messages.
 
 **Admittors**: Communities may optionally elect a trusted member to the role of admittor. Admittors are responsible for admitting new members into the community. They may also assign voting power to members (if this is allowed by the community). They are appointed and replacable by governance.
 Admittors record their decisions on the blockchain, at which point all honest Hosts will start accepting messages from the newly admitted members.
@@ -24,19 +24,19 @@ It is up to the community how enforcers coordinate with each other to enforce th
 
 Now that we've defined the terms of the Fora protocol, we can describe how the members of the community are meant to interact with each other.
 
-members send messages to the community by sending an ActivityPub message signed with the private key that is associated with their public key. members must also include a sequence in their message along with the hash of the previous message to ensure consistent ordering and to detect any dropped messages.
+Members send messages to the community by sending an ActivityPub message signed with the private key that is associated with their public key. Members must also include a sequence in their message along with the hash of the previous message to ensure consistent ordering and to detect any dropped messages.
 
-If the member is a Light member must then send this message to a Host of their choice. If the member is a Host, they simply propogate their message to the rest of their peers.
+If the member is a Light User, they must then send this message to a Host of their choice. If the member is a Host, they simply propagate their message to the rest of their peers.
 
 Any Host receiving a message must first check that the member it is coming from is a valid member of the community (ie accepted and not banned), and then verify that the signature is valid, and that the content is valid and not banned. If all these checks pass, the Host will apply the message to modify its own internal state and then gossip the message to the rest of its peers.
 
-Hosts themselves will have access to the full state of the community, subject to liveness constraints. However, Light members must query a Host in order to get the relevant parts of the community state. At any given point, a Host may not have access to the latest community state. If this is the case, the Light member may query other Hosts to fill in the missing information, or they may wait for the Host to query this information itself and update the Light member's feed.
+Hosts themselves will have access to the full state of the community, subject to liveness constraints. However, Light Users must query a Host in order to get the relevant parts of the community state. At any given point, a Host may not have access to the latest community state. If this is the case, the Light User may query other Hosts to fill in the missing information, or they may wait for the Host to query this information itself and update the Light User's feed.
 
-Missing information from other members will be sometimes be detectable if there are missing sequences in the member's message history. If this is the case, then Hosts can query for the missing information if it indeed exists. Since malicious members may intentionally create missing sequences, Hosts and Light member implementations should not make the assumption that this message actually exists.
+Missing information from other members will be sometimes be detectable if there are missing sequences in the member's message history. If this is the case, then Hosts can query for the missing information if it indeed exists. Since malicious members may intentionally create missing sequences, Hosts and Light User implementations should not make the assumption that this message actually exists.
 
-Messages cannot be forged since all messages accepted by Hosts and Light members must include the signature that comes from the sending member.
+Messages cannot be forged since all messages accepted by Hosts and Light Users must include the signature that comes from the sending member.
 
-Thus, Hosts and Light members can send ActivityPub messages to the community and receive ActivityPub feeds over a decentralized gossip network with no loss of integrity and eventual consistency subject to liveness constraints.
+Thus, Hosts and Light Users can send ActivityPub messages to the community and receive ActivityPub feeds over a decentralized gossip network with no loss of integrity and eventual consistency subject to liveness constraints.
 
 ## Community Governance
 
@@ -97,7 +97,7 @@ At the same time, we do not want to delay changes to community interaction becau
 
 ## Dishonest Hosts
 
-So far, we've only been talking about honest Hosts who will monitor decisions made by Admittors and Enforcers and act accordingly; for example allowing new members to participate or refusing to serve bad content to end-members.
+So far, we've only been talking about honest Hosts who will monitor decisions made by Admittors and Enforcers and act accordingly; for example allowing new members to participate or refusing to serve bad content to end-users.
 
 However, Hosts are not accountable to community governance and thus Fora does not assume that Hosts will be honestly following the protocol. So how does Fora intend to protect honest members from dishonest Hosts who refuse to comply with community decisions?
 
@@ -113,7 +113,7 @@ So long as there are enough Honest nodes in the network such that no member gets
 
 The more serious issue is when a Host ignores an Enforcer's Decision about banned members or banned content. Here a Host might choose to serve an honest member content that has already been banned by an enforcer. The honest member may then choose to report this content, only to find out that this content has already been banned by the Enforcer. The honest member then has a choice of switching to a different Host if they believe this was the cause of malicious hosting rather than a mere liveness issue.
 
-**Honest members Gravitate to Honest, Competent Hosts**
+**Honest Members Gravitate to Honest, Competent Hosts**
 
 As noted above, in each case dishonest nodes can choose not to comply with community decisions; however honest members can always detect this and move to an honest host so long as they aren't completely eclipsed by dishonest hosts. (See eclipse attacks in decentralized networks [here](https://www.radixdlt.com/post/what-is-an-eclipse-attack/)). Thus, dishonest Hosts only threaten to be a temporary nuisance to honest members that rely on them and can no longer affect members once they've switched hosts.
 
