@@ -13,7 +13,8 @@
 7. In order to efficiently and effectively enforce community rules, members of the community may appoint trusted members to specific roles that help steward the community (eg admitting new members, enforcing rules, etc). However, they may also replace these appointees at any time by voting them out and replacing with a new candidate. 
 8. Any malicious authority must not be able to use their power to suppress the ability of the community to overthrow them. For example, a moderator should not be able to ban all members that vote against them before they can vote them out.
 9. *A member who wishes to individually exit the community should be able to transfer their established identity to a different community.*
-10. *Community governance should be a liquid democracy where members can delegate their voting power to other members who can vote on their behalf*
+10. *Members in different communities should be capable of communicating with one another (given both parties consent).*
+11. *Community governance should be a liquid democracy where members can delegate their voting power to other members who can vote on their behalf*
 
 All italicized goals are low-priority and may not be accomplished on the first version of the protocol.
 
