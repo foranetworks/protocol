@@ -22,6 +22,7 @@ URIs (Uniform Resource Identifier) are used within Activity Pub to identify diff
 Fora will use [decentralized identifiers](https://www.w3.org/TR/did-core/), to identify both clients and communities. 
 
 Please refer to the DID specification for further details, but it is essential to understand that:
+- a DID is a URI (it can be a URL and it has properties such as Query, Fragment etc)
 - a DID identifies a DID Subject, and that subject must never change
 - a DID resolves to a DID Document which describes the DID subject
 - a DID Document may be modified by one or more DID Controllers
@@ -30,7 +31,7 @@ Please refer to the DID specification for further details, but it is essential t
 - there exists an authentication method to be associated with a DID Subject, which is specified in the DID Document
 - All information may be modified in a DID Document except the id of the subject
 
-The DIDs of a client must be recorded on a verifiable data registry, typically this will be a public blockchain or ledger. All communities will rely on client DIDs to resolve the authentication method used by a particular client. Communities may choose not to rely on DIDs for authentication of governance module interaction (NOTE: the authentication method of a client may be different from its corresponding controller, the latter would be used to authenticate a governance vote). In this case, public keys for each client controller must be registered on the community. If the communities chooses to use on-chain DID verification, the client DID controllers must be verifiable via a communication protocol such as InterBlockchain Communication.
+The DIDs of a client must be recorded on a verifiable data registry, typically this will be a public blockchain or ledger. All communities will rely on client DIDs to resolve the authentication method used by a particular client (public key the client signs ActivityPub messages with). Communities may choose not to rely on DIDs for authentication of governance module interaction. If the communities choose to use on-chain DID verification, the client DID controllers must be verifiable via a communication protocol such as InterBlockchain Communication. It is recommended that governance modules support using a third verification relationship known as `voting authentication` to authenticate any votes casted by a DID controller on behalf of a DID subject. If communities do not want to require on-chain verifiable DIDs for each member, members must register with the governance module a public key they will use to cast votes.
 
 Client DIDs are intentionally isolated from the communities they are members of in order to allow for individual exit to different communities as well as improved operational security. DIDs allow for clients to rotate private/public key pairs without notifiying all the relevant parties.  The authentication method specified by a client DID must be a form of public/private key authentication.
 
