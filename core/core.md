@@ -101,6 +101,8 @@ So far, we've only been talking about honest Hosts who will monitor decisions ma
 
 However, Hosts are not accountable to community governance and thus Fora does not assume that Hosts will be honestly following the protocol. So how does Fora intend to protect honest members from dishonest Hosts who refuse to comply with community decisions?
 
+The following will illustrate scenarios in which a host can act dishonestly. While the solutions to these scenarios seem manual, light client code should always have a list of hosts to connect to, similar to the options provided by a DNS query. This way, light clients can completely automate the detection and mitigation of dishonest hosts while providing a seamless experience for the user.
+
 **Scenario 1: Host ignores Admittor Decision**
 
 First we can look at a Host who does not accept a new member admitted by the Admittors. Such a Host may refuse to accept messages coming from the new member and may refuse to serve queries about the new member from other members.
